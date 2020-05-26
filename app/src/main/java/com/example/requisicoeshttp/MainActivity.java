@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,6 +100,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String resultado) {
             super.onPostExecute(resultado);
+
+            String logradouro = null;
+            String cep = null;
+
+            try {
+                JSONObject jsonObject = new JSONObject(resultado);
+                logradouro = jsonObject.getString("logradouro"); //chave logradouro do json
+                cep = jsonObject.getString("cep"); //chave cep do json
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
             textoResultado.setText(resultado);
         }
     }
